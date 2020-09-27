@@ -1,0 +1,19 @@
+System:
+  RunMode: debug
+  HttpPort: 8080
+  ReadTimeout: 60
+  WriteTimeout: 60
+App:
+  DefaultPageSize: 10
+  MaxPageSize: 100
+Database:
+  DBType: mysql
+  Username: root
+  Password:
+  Host: 127.0.0.1:3306
+  DBName: blog
+  TablePrefix: blog_
+  Charset: utf8mb4
+  ParseTime: True
+  MaxIdleConns: 10
+  MaxOpenConns: 30
