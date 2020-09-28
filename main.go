@@ -13,7 +13,7 @@ func init() {
 	// init viper must be first
 	initialize.Viper()
 	// init log
-	
+	initialize.Logger()
 	// init mysql
 	initialize.Mysql()
 }

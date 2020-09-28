@@ -7,6 +7,7 @@ type Server struct {
 	System SystemSettingS   `mapstructure:"System" json:"System"`
 	App    AppSettingS      `mapstructure:"App" json:"App"`
 	DB     DatabaseSettingS `mapstructure:"Database" json:"Database"`
+	Logger LoggerSettingS   `mapstructure:"Logger" json:"Logger"`
 }
 
 type SystemSettingS struct {
@@ -19,6 +20,12 @@ type SystemSettingS struct {
 type AppSettingS struct {
 	DefaultPageSize int `mapstructure:"DefaultPageSize" json:"DefaultPageSize"`
 	MaxPageSize     int `mapstructure:"MaxPageSize" json:"MaxPageSize"`
+}
+
+type LoggerSettingS struct {
+	LogSavePath string `mapstructure:"LogSavePath" json:"LogSavePath"`
+	LogFileName string `mapstructure:"LogFileName" json:"LogFileName"`
+	LogFileExt  string `mapstructure:"LogFileExt" json:"LogFileExt"`
 }
 
 type DatabaseSettingS struct {
