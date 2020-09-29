@@ -1,0 +1,276 @@
+basePath: /
+definitions:
+  model.Article:
+    properties:
+      content:
+        type: string
+      coverImageUrl:
+        type: string
+      createdBy:
+        type: string
+      createdOn:
+        type: integer
+      desc:
+        type: string
+      id:
+        type: integer
+      isDel:
+        type: integer
+      modifiedBy:
+        type: string
+      modifiedOn:
+        type: integer
+      state:
+        type: integer
+      title:
+        type: string
+    type: object
+info:
+  contact: {}
+  license: {}
+  title: 博客后端
+  version: "1.0"
+paths:
+  /api/v1/articles:
+    get:
+      parameters:
+      - description: 文章名称
+        in: query
+        name: name
+        type: string
+      - description: 标签ID
+        in: query
+        name: tag_id
+        type: integer
+      - description: 状态
+        in: query
+        name: state
+        type: integer
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页数量
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: 获取多个文章
+      tags:
+      - 文章
+    post:
+      parameters:
+      - description: 标签ID
+        in: body
+        name: tag_id
+        required: true
+        schema:
+          type: string
+      - description: 文章标题
+        in: body
+        name: title
+        required: true
+        schema:
+          type: string
+      - description: 文章简述
+        in: body
+        name: desc
+        schema:
+          type: string
+      - description: 封面图片地址
+        in: body
+        name: cover_image_url
+        required: true
+        schema:
+          type: string
+      - description: 文章内容
+        in: body
+        name: content
+        required: true
+        schema:
+          type: string
+      - description: 创建者
+        in: body
+        name: created_by
+        required: true
+        schema:
+          type: integer
+      - description: 状态
+        in: body
+        name: state
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: 创建文章
+  /api/v1/articles/{id}:
+    delete:
+      parameters:
+      - description: 文章ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: 删除文章
+    get:
+      parameters:
+      - description: 文章ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/model.Article'
+      summary: 获取单个文章
+      tags:
+      - 文章
+    put:
+      parameters:
+      - description: 标签ID
+        in: body
+        name: tag_id
+        schema:
+          type: string
+      - description: 文章标题
+        in: body
+        name: title
+        schema:
+          type: string
+      - description: 文章简述
+        in: body
+        name: desc
+        schema:
+          type: string
+      - description: 封面图片地址
+        in: body
+        name: cover_image_url
+        schema:
+          type: string
+      - description: 文章内容
+        in: body
+        name: content
+        schema:
+          type: string
+      - description: 修改者
+        in: body
+        name: modified_by
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: 更新文章
+  /api/v1/tags:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 页数
+        in: query
+        name: page
+        type: integer
+      - description: 条数
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: 标签List
+      tags:
+      - Tag 标签
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 标签
+        in: body
+        maxLength: 20
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: 创建者
+        in: body
+        name: created_by
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: 创建
+      tags:
+      - Tag 标签
+  /api/v1/tags/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 标签ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: 删除
+      tags:
+      - Tag 标签
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 标签ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 标签
+        in: body
+        maxLength: 20
+        name: name
+        schema:
+          type: string
+      - default: 1
+        description: 状态
+        enum:
+        - 0
+        - 1
+        in: body
+        name: state
+        schema:
+          type: integer
+      - description: 修改者
+        in: body
+        name: modified_by
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: 更新
+      tags:
+      - Tag 标签
+swagger: "2.0"

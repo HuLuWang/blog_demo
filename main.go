@@ -18,6 +18,10 @@ func init() {
 	initialize.Mysql()
 }
 
+// @title 博客后端
+// @version 1.0
+// @BasePath /
+
 func main() {
 	address := fmt.Sprintf(":%d", global.CONFIG.System.HttpPort)
 	log.Printf("%d", global.CONFIG.System.HttpPort)
@@ -25,8 +29,8 @@ func main() {
 	s := &http.Server{
 		Addr:           address,
 		Handler:        Router,
-		ReadTimeout:    global.CONFIG.System.ReadTimeout,
-		WriteTimeout:   global.CONFIG.System.WriteTimeout,
+		ReadTimeout:    global.CONFIG.System.ReadTimeout * time.Second,
+		WriteTimeout:   global.CONFIG.System.WriteTimeout * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
 	time.Sleep(10 * time.Microsecond)
