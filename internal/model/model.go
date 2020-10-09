@@ -8,3 +8,4 @@ type Model struct {
 	ModifiedOn uint32
 	IsDel      uint8
 }
+

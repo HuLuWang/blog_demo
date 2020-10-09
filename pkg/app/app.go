@@ -38,7 +38,7 @@ func (r *Response) ToResponseList(list interface{}, total int) {
 	})
 }
 
-func (r *Response) ToErcurlrorResponse(err *errcode.Error) {
+func (r *Response) ToErrorResponse(err *errcode.Error) {
 	response := gin.H{
 		"code": err.Code(),
 		"msg":  err.Msg(),

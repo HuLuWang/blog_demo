@@ -32,9 +32,30 @@ func (t Tag) List(db *gorm.DB, pageOffset, pageSize int) ([]*Tag, error) {
 	}
 	db = db.Where("state = ?", t.State)
 	if err = db.Where("is_del = ?", 0).Find(&tags).Error; err != nil {
-		return  nil, err
+		return nil, err
 	}
 	return tags, nil
+}
+
+func (t Tag) Create(db *gorm.DB) error {
+	return db.Create(&t).Error
+}
+
+func (t Tag) Update(db *gorm.DB, values interface{}) error {
+	return db.Model(&t).Where("id = ? and is_del = ?", t.ID, 0).Updates(values).Error
+}
+
+func (t Tag) Delete(db *gorm.DB) error {
+	return db.Where("id = ? and is_del = ?", t.Model.ID, 0).Delete(&t).Error
+}
+
+func (t Tag) ListByIDs(db *gorm.DB, ids []uint32) ([]*Tag, error) {
+	var tags []*Tag
+	db = db.Where("state = ? AND is_del = ?", t.State, 0)
+	err := db.Where("id IN (?)", ids).Find(&tags).Error
+	if err != nil && err != gorm.ErrRecordNotFound {
+		return nil, err
+	}
 	
-	
+	return tags, nil
 }
