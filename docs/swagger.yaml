@@ -25,6 +25,25 @@ definitions:
       title:
         type: string
     type: object
+  model.Tag:
+    properties:
+      createdBy:
+        type: string
+      createdOn:
+        type: integer
+      id:
+        type: integer
+      isDel:
+        type: integer
+      modifiedBy:
+        type: string
+      modifiedOn:
+        type: integer
+      name:
+        type: string
+      state:
+        type: integer
+    type: object
 info:
   contact: {}
   license: {}
@@ -108,6 +127,8 @@ paths:
       responses:
         "200": {}
       summary: 创建文章
+      tags:
+      - 文章
   /api/v1/articles/{id}:
     delete:
       parameters:
@@ -121,6 +142,8 @@ paths:
       responses:
         "200": {}
       summary: 删除文章
+      tags:
+      - 文章
     get:
       parameters:
       - description: 文章ID
@@ -176,6 +199,8 @@ paths:
       responses:
         "200": {}
       summary: 更新文章
+      tags:
+      - 文章
   /api/v1/tags:
     get:
       consumes:
@@ -197,26 +222,39 @@ paths:
       tags:
       - Tag 标签
     post:
-      consumes:
-      - application/json
       parameters:
-      - description: 标签
+      - description: 标签名称
         in: body
-        maxLength: 20
+        maxLength: 100
+        minLength: 3
         name: name
         required: true
         schema:
           type: string
+      - default: 1
+        description: 状态
+        enum:
+        - 0
+        - 1
+        in: body
+        name: state
+        schema:
+          type: integer
       - description: 创建者
         in: body
+        maxLength: 100
+        minLength: 3
         name: created_by
         schema:
           type: string
       produces:
       - application/json
       responses:
-        "200": {}
-      summary: 创建
+        "200":
+          description: 成功
+          schema:
+            $ref: '#/definitions/model.Tag'
+      summary: 新增标签
       tags:
       - Tag 标签
   /api/v1/tags/{id}:

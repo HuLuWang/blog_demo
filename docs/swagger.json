@@ -57,6 +57,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "文章"
+                ],
                 "summary": "创建文章",
                 "parameters": [
                     {
@@ -157,6 +160,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "文章"
+                ],
                 "summary": "更新文章",
                 "parameters": [
                     {
@@ -217,6 +223,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "文章"
+                ],
                 "summary": "删除文章",
                 "parameters": [
                     {
@@ -263,20 +272,18 @@
                 }
             },
             "post": {
-                "consumes": [
-                    "application/json"
-                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "Tag 标签"
                 ],
-                "summary": "创建",
+                "summary": "新增标签",
                 "parameters": [
                     {
-                        "maxLength": 20,
-                        "description": "标签",
+                        "maxLength": 100,
+                        "minLength": 3,
+                        "description": "标签名称",
                         "name": "name",
                         "in": "body",
                         "required": true,
@@ -285,6 +292,21 @@
                         }
                     },
                     {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "default": 1,
+                        "description": "状态",
+                        "name": "state",
+                        "in": "body",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "maxLength": 100,
+                        "minLength": 3,
                         "description": "创建者",
                         "name": "created_by",
                         "in": "body",
@@ -294,7 +316,12 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": "成功",
+                        "schema": {
+                            "$ref": "#/definitions/model.Tag"
+                        }
+                    }
                 }
             }
         },
@@ -416,6 +443,35 @@
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "model.Tag": {
+            "type": "object",
+            "properties": {
+                "createdBy": {
+                    "type": "string"
+                },
+                "createdOn": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDel": {
+                    "type": "integer"
+                },
+                "modifiedBy": {
+                    "type": "string"
+                },
+                "modifiedOn": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "integer"
                 }
             }
         }

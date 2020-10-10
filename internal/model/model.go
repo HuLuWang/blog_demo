@@ -9,3 +9,7 @@ type Model struct {
 	IsDel      uint8
 }
 
+const (
+	STATE_OPEN  = 1
+	STATE_CLOSE = 0
+)

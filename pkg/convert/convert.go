@@ -27,3 +27,8 @@ func (s StrTo) MustUInt() uint32 {
 	v, _ := s.UInt32()
 	return v
 }
+
+func (s StrTo) MustUInt32() uint32 {
+	v, _ := s.UInt32()
+	return v
+}
