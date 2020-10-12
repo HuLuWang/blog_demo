@@ -2,6 +2,8 @@ package initialize
 
 import (
 	_ "github.com/HuLuWang/blog_demo/docs"
+	"github.com/HuLuWang/blog_demo/internal/middleware"
+	"github.com/HuLuWang/blog_demo/internal/routers/api"
 	v1 "github.com/HuLuWang/blog_demo/internal/routers/api/v1"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -12,10 +14,14 @@ import (
 func Routers() *gin.Engine {
 	var Router = gin.Default()
 	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	Router.POST("/auth", api.GetAuth)
+	
 	
 	tag := v1.NewTag()
 	article := v1.NewArticle()
 	apiv1 := Router.Group("/api/v1")
+	// 接入jwt
+	apiv1.Use(middleware.JWT())
 	{
 		apiv1.GET("/tags", tag.List)         //标签列表
 		apiv1.POST("/tag", tag.Create)       //创建标签

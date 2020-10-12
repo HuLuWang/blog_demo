@@ -8,6 +8,7 @@ type Server struct {
 	App    AppSettingS      `mapstructure:"App" json:"App"`
 	DB     DatabaseSettingS `mapstructure:"Database" json:"Database"`
 	Logger LoggerSettingS   `mapstructure:"Logger" json:"Logger"`
+	Jwt    JwtS             `mapstructure:"Jwt" json:"Jwt"`
 }
 
 type SystemSettingS struct {
@@ -39,4 +40,10 @@ type DatabaseSettingS struct {
 	ParseTime    bool   `mapstructure:"ParseTime" json:"ParseTime"`
 	MaxIdleConns int    `mapstructure:"MaxIdleConns" json:"MaxIdleConns"`
 	MaxOpenConns int    `mapstructure:"MaxOpenConns" json:"MaxOpenConns"`
+}
+
+type JwtS struct {
+	AppKey    string `mapstructure:"AppKey" json:"AppKey"`
+	AppSecret string `mapstructure:"AppSecret" json:"AppSecret"`
+	Expire    time.Duration    `mapstructure:"Expire" json:"Expire"`
 }

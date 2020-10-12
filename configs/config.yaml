@@ -21,3 +21,7 @@ Logger:
   LogSavePath: storage/logs
   LogFileName: app
   LogFileExt: .log
+Jwt:
+  appKey: blog_demo
+  appSecret: bLoGDemO
+  expire: 7200
