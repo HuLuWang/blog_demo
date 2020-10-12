@@ -2,6 +2,7 @@ package initialize
 
 import (
 	_ "github.com/HuLuWang/blog_demo/docs"
+	"github.com/HuLuWang/blog_demo/global"
 	"github.com/HuLuWang/blog_demo/internal/middleware"
 	"github.com/HuLuWang/blog_demo/internal/routers/api"
 	v1 "github.com/HuLuWang/blog_demo/internal/routers/api/v1"
@@ -24,13 +25,24 @@ var methodLimiters = limiter.NewMethodLimiter().AddBuckets(
 
 //初始化总路由
 func Routers() *gin.Engine {
-	var Router = gin.Default()
-	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	Router.POST("/auth", api.GetAuth)
-	
+	var r = gin.New()
+	if global.CONFIG.System.RunMode == "debug" {
+		r.Use(gin.Logger())
+		r.Use(gin.Recovery())
+	} else {
+		r.Use(middleware.AccessLog())
+		r.Use(gin.Recovery())
+	}
+	// 限流器
+	r.Use(middleware.RateLimiter(methodLimiters))
+	// 超时控制
+	r.Use(middleware.ContextTimeout(60))
 	tag := v1.NewTag()
 	article := v1.NewArticle()
-	apiv1 := Router.Group("/api/v1")
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	r.POST("/auth", api.GetAuth)
+	
+	apiv1 := r.Group("/api/v1")
 	// 接入jwt
 	apiv1.Use(middleware.JWT())
 	{
@@ -44,5 +56,5 @@ func Routers() *gin.Engine {
 		apiv1.PUT("/article/:id", article.Update)    //更新文章
 		apiv1.DELETE("/article/:id", article.Delete) //删除文章
 	}
-	return Router
+	return r
 }
