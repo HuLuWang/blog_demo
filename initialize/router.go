@@ -5,9 +5,21 @@ import (
 	"github.com/HuLuWang/blog_demo/internal/middleware"
 	"github.com/HuLuWang/blog_demo/internal/routers/api"
 	v1 "github.com/HuLuWang/blog_demo/internal/routers/api/v1"
+	"github.com/HuLuWang/blog_demo/pkg/limiter"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"time"
+)
+
+// 初始化限流器
+var methodLimiters = limiter.NewMethodLimiter().AddBuckets(
+	limiter.LimiterBucketRule{
+		Key:          "/auth",
+		FillInterval: time.Second,
+		Capacity:     100,
+		Quantum:      100,
+	},
 )
 
 //初始化总路由
@@ -15,7 +27,6 @@ func Routers() *gin.Engine {
 	var Router = gin.Default()
 	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	Router.POST("/auth", api.GetAuth)
-	
 	
 	tag := v1.NewTag()
 	article := v1.NewArticle()
