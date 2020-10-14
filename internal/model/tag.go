@@ -8,6 +8,10 @@ type Tag struct {
 	State uint8
 }
 
+func (t Tag) TableName() string {
+	return "blog_tag"
+}
+
 func (t Tag) Count(db *gorm.DB) (int, error) {
 	var count int
 	if t.Name != "" {

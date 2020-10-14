@@ -255,6 +255,24 @@
                 "summary": "标签List",
                 "parameters": [
                     {
+                        "maxLength": 100,
+                        "type": "string",
+                        "description": "标签名称",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "enum": [
+                            0,
+                            1
+                        ],
+                        "type": "integer",
+                        "default": 1,
+                        "description": "状态",
+                        "name": "state",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "页数",
                         "name": "page",

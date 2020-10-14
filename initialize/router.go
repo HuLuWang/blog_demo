@@ -44,15 +44,15 @@ func Routers() *gin.Engine {
 	
 	apiv1 := r.Group("/api/v1")
 	// 接入jwt
-	apiv1.Use(middleware.JWT())
+	//apiv1.Use(middleware.JWT())
 	{
 		apiv1.GET("/tags", tag.List)         //标签列表
-		apiv1.POST("/tag", tag.Create)       //创建标签
+		apiv1.POST("/tags", tag.Create)       //创建标签
 		apiv1.PUT("/tag/:id", tag.Update)    //更新标签
 		apiv1.DELETE("/tag/:id", tag.Delete) //删除标签
 		
 		apiv1.GET("/articles", article.List)         //文章列表
-		apiv1.POST("/article", article.Create)       //创建文章
+		apiv1.POST("/articles", article.Create)       //创建文章
 		apiv1.PUT("/article/:id", article.Update)    //更新文章
 		apiv1.DELETE("/article/:id", article.Delete) //删除文章
 	}

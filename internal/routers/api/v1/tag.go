@@ -49,6 +49,8 @@ func (t Tag) Create(c *gin.Context) {
 // @Tags Tag 标签
 // @Accept application/json
 // @Produce application/json
+// @Param name query string false "标签名称" maxlength(100)
+// @Param state query int false "状态" Enums(0, 1) default(1)
 // @Param page query int false "页数"
 // @Param page_size query int false "条数"
 // @Success 200

@@ -206,6 +206,19 @@ paths:
       consumes:
       - application/json
       parameters:
+      - description: 标签名称
+        in: query
+        maxLength: 100
+        name: name
+        type: string
+      - default: 1
+        description: 状态
+        enum:
+        - 0
+        - 1
+        in: query
+        name: state
+        type: integer
       - description: 页数
         in: query
         name: page

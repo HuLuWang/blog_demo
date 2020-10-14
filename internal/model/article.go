@@ -11,6 +11,10 @@ type Article struct {
 	State         uint8
 }
 
+func (a Article) TableName() string {
+	return "blog_article"
+}
+
 func (a Article) Create(db *gorm.DB) (*Article, error) {
 	if err := db.Create(&a).Error; err != nil {
 		return nil, err
@@ -63,9 +67,9 @@ func (a Article) ListByTagID(db *gorm.DB, tagID uint32, pageOffset, pageSize int
 	if pageOffset >= 0 && pageSize > 0 {
 		db = db.Offset(pageOffset).Limit(pageSize)
 	}
-	rows, err := db.Select(fields).Table("article_tag"+" AS at").
-		Joins("LEFT JOIN `"+"tag"+"` AS t ON at.tag_id = t.id").
-		Joins("LEFT JOIN `"+"article"+"` AS ar ON at.article_id = ar.id").
+	rows, err := db.Select(fields).Table(ArticleTag{}.TableName()+" AS at").
+		Joins("LEFT JOIN `"+Tag{}.TableName()+"` AS t ON at.tag_id = t.id").
+		Joins("LEFT JOIN `"+Article{}.TableName()+"` AS ar ON at.article_id = ar.id").
 		Where("at.`tag_id` = ? AND ar.state = ? AND ar.is_del = ?", tagID, a.State, 0).
 		Rows()
 	if err != nil {
@@ -88,9 +92,9 @@ func (a Article) ListByTagID(db *gorm.DB, tagID uint32, pageOffset, pageSize int
 
 func (a Article) CountByTagID(db *gorm.DB, tagID uint32) (int, error) {
 	var count int
-	err := db.Table("article_tag"+" AS at").
-		Joins("LEFT JOIN `"+"tag"+"` AS t ON at.tag_id = t.id").
-		Joins("LEFT JOIN `"+"article"+"` AS ar ON at.article_id = ar.id").
+	err := db.Table(ArticleTag{}.TableName()+" AS at").
+		Joins("LEFT JOIN `"+Tag{}.TableName()+"` AS t ON at.tag_id = t.id").
+		Joins("LEFT JOIN `"+Article{}.TableName()+"` AS ar ON at.article_id = ar.id").
 		Where("at.`tag_id` = ? AND ar.state = ? AND ar.is_del = ?", tagID, a.State, 0).
 		Count(&count).Error
 	if err != nil {

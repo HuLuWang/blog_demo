@@ -2,8 +2,9 @@
 go gin
 ```
 .
+├── README.md
 ├── configs
-│   ├── config.go 
+│   ├── config.go
 │   └── config.yaml
 ├── docs
 │   ├── docs.go
@@ -27,6 +28,10 @@ go gin
 │   │   ├── dao.go
 │   │   └── tag.go
 │   ├── middleware
+│   │   ├── access_log.go
+│   │   ├── context_timeout.go
+│   │   ├── jwt.go
+│   │   └── limiter.go
 │   ├── model
 │   │   ├── article.go
 │   │   ├── article_tag.go
@@ -34,11 +39,13 @@ go gin
 │   │   └── tag.go
 │   ├── routers
 │   │   └── api
+│   │       ├── auth.go
 │   │       └── v1
 │   │           ├── article.go
 │   │           └── tag.go
 │   └── service
 │       ├── article.go
+│       ├── auth.go
 │       ├── service.go
 │       └── tag.go
 ├── main.go
@@ -46,6 +53,7 @@ go gin
 │   ├── app
 │   │   ├── app.go
 │   │   ├── form.go
+│   │   ├── jwt.go
 │   │   └── pagination.go
 │   ├── convert
 │   │   └── convert.go
@@ -53,7 +61,16 @@ go gin
 │   │   ├── common_code.go
 │   │   ├── errcode.go
 │   │   └── module_code.go
-│   └── logger
-│       └── logger.go
+│   ├── limiter
+│   │   ├── limiter.go
+│   │   └── method_limiter.go
+│   ├── logger
+│   │   └── logger.go
+│   └── util
+│       └── md5.go
 └── scripts
+
 ```
+
+### Todo 
+- 链路追踪
